@@ -1,5 +1,6 @@
 const shortid = require('shortid')
 const file = require('./sync')
+const datePost = require('./date')
 const data = require('./data/post')
 
 const get = (id) => {
@@ -41,14 +42,13 @@ const create = (body) => {
   }
 
   let post = {
-    id: shortid.generate(), title, content
+    id: `${datePost.postDate()}-${shortid.generate()}`, date: datePost.postDate(), title, content
   }
 
   data.push(post)
   file.sync('write', '/post.json', data)
 
   return post
-
 }
 
 const edit = (id, body) => {
