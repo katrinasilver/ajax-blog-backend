@@ -6,8 +6,8 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
-const routes = require('./src/routes/post')
-app.use('/', routes)
+const posts = require('./src/routes/post')
+app.use('/', posts)
 
 // Custom Errors
 app.use((err, req, res, next) => {
@@ -17,7 +17,7 @@ app.use((err, req, res, next) => {
 })
 
 // Route Errors
-app.use((req, res, next) => res.status(502).json({ error: { type: 420, message: `enhance your calm :cat:` } }))
+app.use((req, res, next) => res.status(420).json({ error: { type: 420, message: `enhance your calm` } }))
 
 const listener = () => console.log(`Listening on port ${port}!`)
 app.listen(port, listener)

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const filesync = (action, file, val) => {
+const sync = (action, file, val) => {
   if (action === 'read') {
     return JSON.parse(fs.readFileSync(path.join(__dirname, './data') + file, 'utf8'))
   }
@@ -11,5 +11,5 @@ const filesync = (action, file, val) => {
 }
 
 module.exports = {
-  filesync
+  sync
 }
