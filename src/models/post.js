@@ -52,7 +52,38 @@ const create = (body) => {
 }
 
 const edit = (id, body) => {
-  console.log(`edit posts`);
+  const errors = []
+  const { title, content } = body
+  const data = file.sync('read', '/post.json')
+  const post = data.find(p => p.id === id)
+
+  if (body.title && body.title.length > 60) {
+    errors.push(`posts titles must not exceed 60 characters`)
+    return { errors }
+
+  } else
+
+  if (!body.title) {
+    post.content = content
+    file.sync('write', '/post.json', data)
+
+    return post
+
+  } else
+
+  if (!body.content) {
+    post.title = title
+    file.sync('write', '/post.json', data)
+
+    return post
+
+  } else {
+    post.title = title
+    post.content = content
+    file.sync('write', '/post.json', data)
+
+    return post
+  }
 }
 
 const deletePost = (id) => {
@@ -71,7 +102,6 @@ const deletePost = (id) => {
 
   return data
 }
-
 
 module.exports = {
   get, getAll, create, edit, deletePost

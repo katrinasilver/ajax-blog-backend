@@ -27,7 +27,13 @@ const create = (req, res, next) => {
 }
 
 const edit = (req, res, next) => {
-  console.log(`edit posts`);
+  const data = model.edit(req.params.postid, req.body)
+
+  if (data.errors) {
+    return next({ status: 400, message: `edit post failed`, errors: data.errors })
+  }
+
+  res.status(201).json(data)
 }
 
 const deletePost = (req, res, next) => {
