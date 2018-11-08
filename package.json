@@ -2,17 +2,26 @@
   "name": "ajax-blog-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/katrinasilver/ajax-blog-backend.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Katrina Agustin",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "short-id": "^0.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  },
   "bugs": {
     "url": "https://github.com/katrinasilver/ajax-blog-backend/issues"
   },
