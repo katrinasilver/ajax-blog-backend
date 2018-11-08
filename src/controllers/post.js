@@ -17,7 +17,13 @@ const getAll = (req, res, next) => {
 }
 
 const create = (req, res, next) => {
-  console.log(`create posts`);
+  const data = model.create(req.body)
+
+  if (data.errors) {
+    return next({ status: 400, message: `post failed`, errors: data.errors })
+  }
+
+  res.status(201).json(data)
 }
 
 const edit = (req, res, next) => {

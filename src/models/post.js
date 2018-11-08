@@ -26,7 +26,29 @@ const getAll = (limit) => {
 }
 
 const create = (body) => {
-  console.log(`create posts`);
+  const errors = []
+  const { title, content } = body
+  const data = file.sync('read', '/post.json')
+
+  if (!body.title || !body.content) {
+    errors.push(`posts must have a title and a content`)
+    return { errors }
+  }
+
+  if (body.title.length > 60) {
+    errors.push(`posts titles must not exceed 60 characters`)
+    return { errors }
+  }
+
+  let post = {
+    id: shortid.generate(), title, content
+  }
+
+  data.push(post)
+  file.sync('write', '/post.json', data)
+
+  return post
+
 }
 
 const edit = (id, body) => {
