@@ -19,7 +19,7 @@ const getAll = (limit) => {
   const data = file.sync('read', '/post.json')
 
   if (!data.length) {
-    errors.push(`there are no posts in the blog right now :(`)
+    errors.push(`there are no posts in the database right now :(`)
     return { errors }
   }
   return limit ? data.slice(0, limit) : data
@@ -56,7 +56,20 @@ const edit = (id, body) => {
 }
 
 const deletePost = (id) => {
-  console.log(`delete posts`);
+  const errors = []
+  const data = file.sync('read', '/post.json')
+  const post = data.find(p => p.id === id)
+  const index = data.findIndex(p => p.id === id)
+
+  if (!post) {
+    errors.push(`post id doesn't exist`)
+    return { errors }
+  }
+
+  data.splice(index, 1)
+  file.sync('write', '/post.json', data)
+
+  return data
 }
 
 
