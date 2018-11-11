@@ -57,33 +57,32 @@ const edit = (id, body) => {
   const data = file.sync('read', '/post.json')
   const post = data.find(p => p.id === id)
 
-  if (body.title && body.title.length > 60) {
+  if (!title && !content) {
+    errors.push(`must use title and content for editing`)
+    return { errors }
+  }
+
+  if (title && title.length > 60) {
     errors.push(`posts titles must not exceed 60 characters`)
     return { errors }
+  }
 
-  } else
-
-  if (!body.title) {
+  if (content && !title) {
     post.content = content
     file.sync('write', '/post.json', data)
-
-    return post
-
-  } else
-
-  if (!body.content) {
-    post.title = title
-    file.sync('write', '/post.json', data)
-
-    return post
-
-  } else {
-    post.title = title
-    post.content = content
-    file.sync('write', '/post.json', data)
-
     return post
   }
+
+  if (title && !content) {
+    post.title = title
+    file.sync('write', '/post.json', data)
+    return post
+  }
+
+    post.title = title
+    post.content = content
+    file.sync('write', '/post.json', data)
+    return post
 }
 
 const deletePost = (id) => {
