@@ -2,9 +2,11 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const port = process.env.PORT || 3000
+const cors = require('cors')
 
 app.use(express.json())
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
+app.use(cors())
 
 const posts = require('./src/routes/post')
 app.use('/', posts)
