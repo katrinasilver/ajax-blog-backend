@@ -42,7 +42,7 @@ const create = (body) => {
   }
 
   let post = {
-    id: `${shortid.generate()}`, date, title, content
+    id: `${date}-${(shortid.generate()).replace('_', 0)}`, date, title, content
   }
 
   data.push(post)
