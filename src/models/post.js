@@ -1,6 +1,6 @@
 const shortid = require('shortid')
 const file = require('./sync')
-// const datePost = require('./date')
+const dates = require('./date')
 const data = require('./data/post')
 
 const get = (id) => {
@@ -28,7 +28,7 @@ const getAll = (limit) => {
 
 const create = (body) => {
   const errors = []
-  const { date, title, content } = body
+  const { date, title, author, content } = body
   const data = file.sync('read', '/post.json')
 
   if (!body.title || !body.content) {
@@ -42,7 +42,11 @@ const create = (body) => {
   }
 
   let post = {
-    id: `${date}-${(shortid.generate()).replace('_', 0)}`, date, title, content
+    id: `${dates.postDate()}-${(shortid.generate()).replace('_', 0)}`,
+    date: dates.postDate(),
+    title,
+    author,
+    content
   }
 
   data.push(post)
@@ -53,12 +57,17 @@ const create = (body) => {
 
 const edit = (id, body) => {
   const errors = []
-  const { title, content } = body
+  const { title, author, content } = body
   const data = file.sync('read', '/post.json')
   const post = data.find(p => p.id === id)
 
-  if (!title && !content) {
+  if (!title && !content && !author) {
     errors.push(`must use title and content for editing`)
+    return { errors }
+  }
+
+  if (author && author.length > 30) {
+    errors.push(`post author must not exceed 30 characters`)
     return { errors }
   }
 
@@ -67,14 +76,21 @@ const edit = (id, body) => {
     return { errors }
   }
 
-  if (content && !title) {
+  if (content && !title && !author) {
     post.content = content
     file.sync('write', '/post.json', data)
     return post
   }
 
-  if (title && !content) {
+  if (title && !content && !author) {
     post.title = title
+    file.sync('write', '/post.json', data)
+    return post
+  }
+
+
+  if (author && !title && !content) {
+    post.author = author
     file.sync('write', '/post.json', data)
     return post
   }
