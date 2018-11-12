@@ -28,7 +28,7 @@ const getAll = (limit) => {
 
 const create = (body) => {
   const errors = []
-  const { title, content } = body
+  const { date, title, content } = body
   const data = file.sync('read', '/post.json')
 
   if (!body.title || !body.content) {
@@ -42,7 +42,7 @@ const create = (body) => {
   }
 
   let post = {
-    id: `${date}-${shortid.generate()}`, date, title, content
+    id: `${shortid.generate()}`, date, title, content
   }
 
   data.push(post)
