@@ -5,7 +5,7 @@ const data = require('./data/post')
 
 const get = (id) => {
   const errors = []
-  const data = file.sync('read', '/post.json')
+  const data = file.sync('/post.json')
   const post = data.find(p => p.id === id)
 
   if (!post) {
@@ -17,7 +17,7 @@ const get = (id) => {
 
 const getAll = (limit) => {
   const errors = []
-  const data = file.sync('read', '/post.json')
+  const data = file.sync('/post.json')
 
   if (!data.length) {
     errors.push(`there are no posts in the database right now :(`)
@@ -29,7 +29,7 @@ const getAll = (limit) => {
 const create = (body) => {
   const errors = []
   const { title, author, content } = body
-  const data = file.sync('read', '/post.json')
+  const data = file.sync('/post.json')
 
   if (!body.title || !body.content) {
     errors.push(`posts must have a title and a content`)
@@ -58,7 +58,7 @@ const create = (body) => {
 const edit = (id, body) => {
   const errors = []
   const { title, author, content } = body
-  const data = file.sync('read', '/post.json')
+  const data = file.sync('/post.json')
   const post = data.find(p => p.id === id)
 
   if (!title && !content && !author) {
@@ -84,26 +84,26 @@ const edit = (id, body) => {
 
   if (title && !content && !author) {
     post.title = title
-    file.sync('write', '/post.json', data)
+    file.sync('/post.json', data)
     return post
   }
 
 
   if (author && !title && !content) {
     post.author = author
-    file.sync('write', '/post.json', data)
+    file.sync('/post.json', data)
     return post
   }
 
     post.title = title
     post.content = content
-    file.sync('write', '/post.json', data)
+    file.sync('/post.json', data)
     return post
 }
 
 const deletePost = (id) => {
   const errors = []
-  const data = file.sync('read', '/post.json')
+  const data = file.sync('/post.json')
   const post = data.find(p => p.id === id)
   const index = data.findIndex(p => p.id === id)
 
@@ -113,7 +113,7 @@ const deletePost = (id) => {
   }
 
   data.splice(index, 1)
-  file.sync('write', '/post.json', data)
+  file.sync('/post.json', data)
 
   return data
 }
