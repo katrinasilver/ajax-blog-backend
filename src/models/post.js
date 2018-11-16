@@ -28,7 +28,7 @@ const getAll = (limit) => {
 
 const create = (body) => {
   const errors = []
-  const { date, title, author, content } = body
+  const { title, author, content } = body
   const data = file.sync('read', '/post.json')
 
   if (!body.title || !body.content) {
