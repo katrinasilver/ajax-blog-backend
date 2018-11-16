@@ -7,7 +7,7 @@ const get = (req, res, next) => {
     return next({ status: 400, message: `post not found`, errors: data.errors })
   }
 
-  res.status(200).json([data])
+  res.status(200).json([ data ])
 }
 
 const getAll = (req, res, next) => {
