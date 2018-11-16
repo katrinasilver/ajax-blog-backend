@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 app.use(cors())
 
 const posts = require('./src/routes/post')
-app.use('/', posts)
+app.use('/posts', posts)
 
 // Custom Errors
 app.use((err, req, res, next) => {

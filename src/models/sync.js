@@ -1,11 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 
-const sync = (action, file, val) => {
-  if (action === 'read') {
+const sync = (file, val) => {
+  if (!val) {
     return JSON.parse(fs.readFileSync(path.join(__dirname, './data') + file, 'utf-8'))
   }
-  if (action === 'write') {
+  else {
     return fs.writeFileSync(path.join(__dirname, './data') + file, JSON.stringify(val, null, 2), 'utf-8')
   }
 }
