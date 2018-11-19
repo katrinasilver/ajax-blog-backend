@@ -96,6 +96,7 @@ const edit = (id, body) => {
   }
 
     post.title = title
+    post.author = author
     post.content = content
     file.sync('write', '/post.json', data)
     return post
